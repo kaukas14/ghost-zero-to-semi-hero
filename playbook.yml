@@ -1,0 +1,4 @@
+- host: localhost
+  connection: localhost
+  tasks:
+    - include: 'tasks/install_mysql.yml'

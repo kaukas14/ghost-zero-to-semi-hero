@@ -1,0 +1,7 @@
+---
+- name: mysql
+  user: vagrant
+  sudo: True
+- name: mysql | Installing mysql
+  yum:
+    name: mysql-server
