@@ -1,2 +1,1 @@
-yum -y install epel-release
-yum -y install ansible
+apt-get install ansible -y

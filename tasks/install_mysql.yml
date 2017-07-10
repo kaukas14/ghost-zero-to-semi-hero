@@ -1,7 +1,38 @@
 ---
-- name: mysql
-  user: vagrant
-  sudo: True
-- name: mysql | Installing mysql
-  yum:
-    name: mysql-server
+- name: install packages
+  apt: name={{item}} state=latest
+  with_items:
+  - mysql-server
+  - python-mysqldb
+  - docker
+  - docker.io
+  - python-pip
+
+- pip:
+   name: docker-py
+   state: latest
+
+- mysql_user:
+   name: ghost
+   password: ghost
+   priv: '*.*:ALL'
+   state: present
+
+- name: create new database
+  mysql_db:
+    name: ghostdb
+    state: present
+    login_user: ghost
+    login_password: ghost
+
+- name: pull an image
+  docker_image:
+    name: ghost:latest
+    state: present
+    path: .
+
+- name: start container
+  docker_container:
+    name: ghost
+    image: ghost
+    state: started
